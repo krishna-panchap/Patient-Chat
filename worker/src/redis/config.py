@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import aioredis
+from rejson import Client
 
 load_dotenv()
 
@@ -17,3 +18,9 @@ class Redis():
             self.connection_url, db=0)
 
         return self.connection
+    def create_rejson_connection(self):
+        self.redisJson = Client(host=self.REDIS_HOST,
+                                port=self.REDIS_PORT, decode_responses=True, username=self.REDIS_USER, password=self.REDIS_PASSWORD)
+
+        return self.redisJson
+
