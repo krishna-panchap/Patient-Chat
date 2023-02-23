@@ -1,6 +1,8 @@
 import os, uuid
 from fastapi import APIRouter, FastAPI, WebSocket,  Request, HTTPException, Depends, WebSocketDisconnect, status
 
+from .gptj import GPT
+
 from ..socket.connection import ConnectionManager
 
 from ..socket.utils import get_token
@@ -76,3 +78,9 @@ async def websocket_endpoint(websocket: WebSocket, token: str = Depends(get_toke
 
     except WebSocketDisconnect:
         manager.disconnect(websocket)
+
+    
+@chat.post("/ask_assist")
+async def ask_assist( name: str, age: int, sex: str, PMS, SH, CM, PP, prompt):
+    instance = GPT(name = name, age = age, sex = sex, PMS = PMS, SH = SH, CM = CM, PP = PP)
+    return instance.query(prompt)

@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from pydantic import BaseModel
 import requests
 import json
 import openai
@@ -37,11 +38,11 @@ class GPT:
         - Scheduled Procedures: {self.PP}
         
         
-        Please answer concisely, and make sure to explain possible concerns/ things to know about with regard to their Past Medical History
+        Please answer concisely and do not congratulate them (keep it professional), and make sure to explain possible concerns/ things to know about with regard to their Past Medical History
         and Current  Medications. Please explain explicitly each medical history in the list and
         how it might impact their question. Also explain explicitly how each medicine in their list
-        impact their question. After addressing their question, mention things they can do to 
-        have a complication-free experience after surgery: 
+        impacts their upcoming surgery. After addressing their question, mention things they can do to 
+        have a complication-free experience after surgery. Close off with your name, MediAI.
 
         Patient Question: {input}
         """,
@@ -54,11 +55,11 @@ class GPT:
       text = response['choices'][0]['text']
       return text
 
-if __name__ == "__main__":
-    instance = GPT(name = "John Phillips", age = 65, sex = 'male', PMS=['Type 2 Diabetes', 'hypoglycemia', 'hypothyroidism', 'High blood pressure'], 
-    CM = ['Metformin 500 mg 2 tablets twice daily', 'Glimepiride 1 mg daily', 'Lisinopril 20 mg daily', 'Atorvastatin 20 mg daily', 'Levothyroxine 88 mcg daily', 'Aspirin 81 mg daily', 'Coenzyme q10 200 mg daily', 'Vitamin D 2000 IU daily'],
-    PP = " The patient has a knee arthroplasty scheduled 2 days from now.", SH = ['Smoker', 'Light Drinker'] 
-    )
+# if __name__ == "__main__":
+#     instance = GPT(name = "John Phillips", age = 65, sex = 'male', PMS=['Type 2 Diabetes', 'hypoglycemia', 'hypothyroidism', 'High blood pressure'], 
+#     CM = ['Metformin 500 mg 2 tablets twice daily', 'Glimepiride 1 mg daily', 'Lisinopril 20 mg daily', 'Atorvastatin 20 mg daily', 'Levothyroxine 88 mcg daily', 'Aspirin 81 mg daily', 'Coenzyme q10 200 mg daily', 'Vitamin D 2000 IU daily'],
+#     PP = " The patient has a knee arthroplasty scheduled 2 days from now.", SH = ['Smoker', 'Light Drinker'] 
+#     )
     
     
-    print(instance.query("Hello, my name is John and I am scheduled f  or Knee Replacement Surgery. I am feeling a little concerned, what can I expect of this procedure for myself"))
+#     print(instance.query("Hello, my name is John and I am scheduled f  or Knee Replacement Surgery. I am feeling a little concerned, what can I expect of this procedure for myself"))
